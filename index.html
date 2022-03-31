@@ -1,17 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Meir Nigberg" />
-    <meta name="keywords" content="city, USA, society, Kentucky, Burundy, javascript, jsx, xmlhttprequest" />
-    <meta name="description" content="Around The U.S. — an interactive page where users can add, remove, or like photos" />
-    <title>Around The U.S.</title>
-    <link rel="stylesheet" href="./pages/index.css" />
-    <link rel="icon" href="./favicon.ico">
-</head>
-<body class="root">
 
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Meir Nigberg" />
+  <meta name="keywords" content="city, USA, society, Kentucky, Burundy, javascript, jsx, xmlhttprequest" />
+  <meta name="description"
+    content="Around The U.S. — an interactive page where users can add, remove, or like photos" />
+  <title>Around The U.S.</title>
+  <link rel="stylesheet" href="./pages/index.css" />
+  <link rel="icon" href="./favicon.ico">
+</head>
+
+<body class="root">
+  <div class="page">
+    <header class="header">
+      <img src="./images/logo.svg" alt="Logo" class="header__logo">
+    </header>
+    <main class="content">
+      <section class="profile">
+        <div class="profile__avatar"></div>
+        <h1 class="profile__name">Jacques Cousteau</h1>
+        <p class="profile__occupation">Explorer</p>
+        <button type="button" class="profile__edit-button"><img src="./images/edit.png" alt="Edit"
+            class="profile__edit-button-image"></button>
+        <button type="button" class="profile__add-button"><img src="./images/add.png" alt="Add"
+            class="profile__add-button-image"></button>
+      </section>
+      <section class="gallery">
+        <article class="card">
+
+        </article>
+        <article class="card">
+
+        </article>
+        <article class="card">
+
+        </article>
+        <article class="card">
+
+        </article>
+        <article class="card">
+
+        </article>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="copyright">&copy; 2022 Meir Nigberg</p>
+    </footer>
+  </div>
+  <script src="./scripts/script.js"></script>
 </body>
+
 </html>

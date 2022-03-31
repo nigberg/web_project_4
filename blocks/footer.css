@@ -1,5 +1,6 @@
 .footer{
   padding: 68px 0 60px;
+  margin: 0;
 }
 .footer__copyright{
   font-weight: 400;
@@ -7,7 +8,7 @@
   line-height: 22px;
   color: #545454;
 }
-@media screen and (max-width:900px){
+@media screen and (max-width: 900px){
   .footer{
     padding: 50px 19px 36px;
   }

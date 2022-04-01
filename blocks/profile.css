@@ -86,12 +86,12 @@
     margin: 0 auto 36px;
   }
   .profile__name{
-    display: inline-block;
+    display: inline;
     margin: 0 15px 14px auto;
   }
   .profile__add-button{
     width: 500px;
-    display: inline-block;
+    display: inline;
   }
 }
 @media screen and (max-width: 650px){

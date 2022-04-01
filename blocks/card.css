@@ -32,3 +32,6 @@
   border: none;
   background: transparent;
 }
+.card__like-button:hover{
+  opacity: 60%;
+}

@@ -1,12 +1,6 @@
 let closeButton = document.querySelector(".popup__close-button");
-closeButton.addEventListener("click", handleCloseButton);
-
 let editButton = document.querySelector(".profile__edit-button");
-editButton.addEventListener("click", handleEditButton);
-
 let editForm = document.querySelector(".popup__edit-form");
-editForm.addEventListener("submit", handleSubmitForm);
-
 let popup = document.querySelector(".popup");
 
 function handleCloseButton(){
@@ -28,3 +22,6 @@ function handleSubmitForm(evt){
   document.querySelector(".profile__occupation").textContent = document.querySelector("#popup__input-about").value;
   popup.classList.remove("popup_visible");
 }
+closeButton.addEventListener("click", handleCloseButton);
+editButton.addEventListener("click", handleEditButton);
+editForm.addEventListener("submit", handleSubmitForm);

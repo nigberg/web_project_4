@@ -1,6 +1,6 @@
 .card{
   width: 282px;
-  height: 361px;
+  min-height: 361px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -8,6 +8,8 @@
 }
 .card__image{
   border-radius: 10px 10px 0 0;
+  width: 282px;
+  height: 282px;
 }
 .card__caption{
   background-color: #FFF;
@@ -29,9 +31,15 @@
   text-overflow: ellipsis;
 }
 .card__like-button{
+  width: 21px;
+  height: 19px;
   border: none;
   background: transparent;
+  background-image: url(../images/like.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
 }
 .card__like-button:hover{
-  opacity: 60%;
+  opacity: 50%;
 }

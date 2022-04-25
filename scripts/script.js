@@ -1,3 +1,4 @@
+// Gallery building start
 const gallery = document.querySelector(".gallery");
 const cardTemplate = document.querySelector("#card").content;
 const initialCards = [
@@ -31,21 +32,24 @@ initialCards.forEach(item=>{
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   cardElement.querySelector(".card__description").textContent = item.name;
   cardElement.querySelector(".card__image").src = item.link;
+  cardElement.querySelector(".card__image").alt = item.name;
   gallery.append(cardElement);
 });
+// Gallery building end
 
+// Elements selecting
+const closeButton = document.querySelector(".popup__close-button");
+const editButton = document.querySelector(".profile__edit-button");
+const editForm = document.querySelector(".popup__edit-form");
+const popup = document.querySelector(".popup");
+const likeButtons = document.querySelectorAll(".card__like-button");
+const deleteButtons = document.querySelectorAll(".card__delete-button");
+const cardImages = document.querySelectorAll(".card__image");
+const picturePopup = document.querySelector(".picture-popup");
 
-
-let closeButton = document.querySelector(".popup__close-button");
-let editButton = document.querySelector(".profile__edit-button");
-let editForm = document.querySelector(".popup__edit-form");
-let popup = document.querySelector(".popup");
-let likeButtons = document.querySelectorAll(".card__like-button");
-let deleteButtons = document.querySelectorAll(".card__delete-button");
-
-
-function handleCloseButton(){
-  popup.classList.remove("popup_visible");
+// Event handlers
+function handleCloseButton(evt){
+  evt.target.parentElement.parentElement.classList.remove("popup_visible");
 
 }
 function handleEditButton(){
@@ -69,7 +73,16 @@ function handleLikeButton(evt){
 function handleDeleteButton(evt){
   evt.target.parentElement.parentElement.remove();
 }
-
+function openImage(evt){
+  const link = evt.target.src;
+  const caption = evt.target.alt;
+  document.querySelector(".picture-popup__image").src = link;
+  document.querySelector(".picture-popup__image").alt = caption;
+  document.querySelector(".picture-popup__caption").textContent = caption;
+  document.querySelector(".picture-popup__close-button").addEventListener("click", handleCloseButton);
+  document.querySelector(".picture-popup").classList.add("popup_visible");
+}
+// Event listeners binding with elements
 closeButton.addEventListener("click", handleCloseButton);
 editButton.addEventListener("click", handleEditButton);
 editForm.addEventListener("submit", handleSubmitForm);
@@ -78,4 +91,7 @@ likeButtons.forEach(button=>{
 });
 deleteButtons.forEach(button=>{
   button.addEventListener("click", handleDeleteButton);
+});
+cardImages.forEach(img=>{
+  img.addEventListener("click", openImage);
 });

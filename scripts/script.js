@@ -1,9 +1,12 @@
 // Elements selecting
 const editPopupCloseButton = document.querySelector(".edit-popup__close-button");
 const editButton = document.querySelector(".profile__edit-button");
+const addButton = document.querySelector(".profile__add-button");
 const editForm = document.querySelector(".edit-popup__edit-form");
+const addForm = document.querySelector(".add-popup__form");
 const editPopup = document.querySelector(".edit-popup");
 const picturePopup = document.querySelector(".picture-popup");
+const addPopup = document.querySelector(".add-popup");
 const gallery = document.querySelector(".gallery");
 const cardTemplate = document.querySelector("#card").content;
 
@@ -74,7 +77,6 @@ function handleDeleteButton(evt){
   evt.target.parentElement.parentElement.remove();
 }
 function openImage(evt){
-  console.log("before open");
   const link = evt.target.src;
   const caption = evt.target.alt;
   document.querySelector(".picture-popup__image").src = link;
@@ -83,17 +85,36 @@ function openImage(evt){
   document.querySelector(".picture-popup__close-button").addEventListener("click", handleCloseButton);
   picturePopup.classList.add("popup_visible");
 }
+function handleAddButton(){
+  addPopup.classList.add("popup_visible");
+  document.querySelector(".add-popup__close-button").addEventListener("click", handleCloseButton);
+}
+function handleAddform(evt){
+  evt.preventDefault;
+  const link = document.querySelector("#add-popup__input-link").value;
+  const caption = document.querySelector("#add-popup__input-description").value;
+  addNewCard(link, caption);
+  addPopup.classList.remove("popup_visible");
+}
 function addNewCard(link, caption){
+  console.log(link);
+  console.log(caption);
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   cardElement.querySelector(".card__description").textContent = caption;
   cardElement.querySelector(".card__image").src = link;
   cardElement.querySelector(".card__image").alt = caption;
+  cardElement.querySelector(".card__like-button").addEventListener("click" ,handleLikeButton);
+  cardElement.querySelector(".card__delete-button").addEventListener("click" ,handleDeleteButton);
+  cardElement.querySelector(".card__image").addEventListener("click" ,openImage);
+
   gallery.prepend(cardElement);
 }
 // Event listeners binding with elements
 editPopupCloseButton.addEventListener("click", handleCloseButton);
 editButton.addEventListener("click", handleEditButton);
 editForm.addEventListener("submit", handleSubmitForm);
+addForm.addEventListener("submit", handleAddform);
+addButton.addEventListener("click", handleAddButton);
 
 likeButtons.forEach(button=>{
   button.addEventListener("click", handleLikeButton);

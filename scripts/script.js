@@ -90,23 +90,20 @@ function handleAddButton(){
   document.querySelector(".add-popup__close-button").addEventListener("click", handleCloseButton);
 }
 function handleAddform(evt){
-  evt.preventDefault;
+  evt.preventDefault();
   const link = document.querySelector("#add-popup__input-link").value;
   const caption = document.querySelector("#add-popup__input-description").value;
   addNewCard(link, caption);
   addPopup.classList.remove("popup_visible");
 }
 function addNewCard(link, caption){
-  console.log(link);
-  console.log(caption);
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   cardElement.querySelector(".card__description").textContent = caption;
   cardElement.querySelector(".card__image").src = link;
   cardElement.querySelector(".card__image").alt = caption;
-  cardElement.querySelector(".card__like-button").addEventListener("click" ,handleLikeButton);
-  cardElement.querySelector(".card__delete-button").addEventListener("click" ,handleDeleteButton);
-  cardElement.querySelector(".card__image").addEventListener("click" ,openImage);
-
+  cardElement.querySelector(".card__like-button").addEventListener("click",handleLikeButton);
+  cardElement.querySelector(".card__delete-button").addEventListener("click",handleDeleteButton);
+  cardElement.querySelector(".card__image").addEventListener("click",openImage);
   gallery.prepend(cardElement);
 }
 // Event listeners binding with elements

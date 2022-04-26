@@ -1,6 +1,13 @@
-// Gallery building start
+// Elements selecting
+const editPopupCloseButton = document.querySelector(".edit-popup__close-button");
+const editButton = document.querySelector(".profile__edit-button");
+const editForm = document.querySelector(".edit-popup__edit-form");
+const editPopup = document.querySelector(".edit-popup");
+const picturePopup = document.querySelector(".picture-popup");
 const gallery = document.querySelector(".gallery");
 const cardTemplate = document.querySelector("#card").content;
+
+// Gallery building start
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -35,37 +42,30 @@ initialCards.forEach(item=>{
   cardElement.querySelector(".card__image").alt = item.name;
   gallery.append(cardElement);
 });
-// Gallery building end
-
-// Elements selecting
-const closeButton = document.querySelector(".popup__close-button");
-const editButton = document.querySelector(".profile__edit-button");
-const editForm = document.querySelector(".popup__edit-form");
-const popup = document.querySelector(".popup");
 const likeButtons = document.querySelectorAll(".card__like-button");
 const deleteButtons = document.querySelectorAll(".card__delete-button");
 const cardImages = document.querySelectorAll(".card__image");
-const picturePopup = document.querySelector(".picture-popup");
+// Gallery building end
+
 
 // Event handlers
 function handleCloseButton(evt){
   evt.target.parentElement.parentElement.classList.remove("popup_visible");
-
 }
 function handleEditButton(){
-  popup.classList.add("popup_visible");
+  editPopup.classList.add("popup_visible");
   let userName = document.querySelector(".profile__name").textContent;
   let userAbout = document.querySelector(".profile__occupation").textContent;
-  let inputName = document.querySelector("#popup__input-name");
-  let inputAbout = document.querySelector("#popup__input-about");
+  let inputName = document.querySelector("#edit-popup__input-name");
+  let inputAbout = document.querySelector("#edit-popup__input-about");
   inputName.value = userName;
   inputAbout.value = userAbout;
 }
 function handleSubmitForm(evt){
   evt.preventDefault();
-  document.querySelector(".profile__name").textContent = document.querySelector("#popup__input-name").value;
-  document.querySelector(".profile__occupation").textContent = document.querySelector("#popup__input-about").value;
-  popup.classList.remove("popup_visible");
+  document.querySelector(".profile__name").textContent = document.querySelector("#edit-popup__input-name").value;
+  document.querySelector(".profile__occupation").textContent = document.querySelector("#edit-popup__input-about").value;
+  editPopup.classList.remove("popup_visible");
 }
 function handleLikeButton(evt){
   evt.target.classList.toggle("card__like-button_active");
@@ -74,18 +74,27 @@ function handleDeleteButton(evt){
   evt.target.parentElement.parentElement.remove();
 }
 function openImage(evt){
+  console.log("before open");
   const link = evt.target.src;
   const caption = evt.target.alt;
   document.querySelector(".picture-popup__image").src = link;
   document.querySelector(".picture-popup__image").alt = caption;
   document.querySelector(".picture-popup__caption").textContent = caption;
   document.querySelector(".picture-popup__close-button").addEventListener("click", handleCloseButton);
-  document.querySelector(".picture-popup").classList.add("popup_visible");
+  picturePopup.classList.add("popup_visible");
+}
+function addNewCard(link, caption){
+  const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
+  cardElement.querySelector(".card__description").textContent = caption;
+  cardElement.querySelector(".card__image").src = link;
+  cardElement.querySelector(".card__image").alt = caption;
+  gallery.prepend(cardElement);
 }
 // Event listeners binding with elements
-closeButton.addEventListener("click", handleCloseButton);
+editPopupCloseButton.addEventListener("click", handleCloseButton);
 editButton.addEventListener("click", handleEditButton);
 editForm.addEventListener("submit", handleSubmitForm);
+
 likeButtons.forEach(button=>{
   button.addEventListener("click", handleLikeButton);
 });

@@ -9,6 +9,10 @@ const picturePopup = document.querySelector(".picture-popup");
 const addPopup = document.querySelector(".add-popup");
 const gallery = document.querySelector(".gallery");
 const cardTemplate = document.querySelector("#card").content;
+const profileNameElement = document.querySelector(".profile__name");
+const profileOccupationElement = document.querySelector(".profile__occupation");
+const profileNameInputElement = document.querySelector("#edit-popup__input-name");
+const profileOccupationInputElement = document.querySelector("#edit-popup__input-about");
 
 // Gallery building start
 const initialCards = [
@@ -72,17 +76,15 @@ function handleCloseButton(evt){
 }
 function handleEditButton(){
   openPopup(editPopup);
-  const userName = document.querySelector(".profile__name").textContent;
-  const userAbout = document.querySelector(".profile__occupation").textContent;
-  const inputName = document.querySelector("#edit-popup__input-name");
-  const inputAbout = document.querySelector("#edit-popup__input-about");
-  inputName.value = userName;
-  inputAbout.value = userAbout;
+  const userName = profileNameElement.textContent;
+  const userAbout = profileOccupationElement.textContent;
+  profileNameInputElement.value = userName;
+  profileOccupationInputElement.value = userAbout;
 }
 function handleSubmitForm(evt){
   evt.preventDefault();
-  document.querySelector(".profile__name").textContent = document.querySelector("#edit-popup__input-name").value;
-  document.querySelector(".profile__occupation").textContent = document.querySelector("#edit-popup__input-about").value;
+  profileNameElement.textContent = profileNameInputElement.value;
+  profileOccupationElement.textContent = profileOccupationInputElement.value;
   closePopup(editPopup);
 }
 function handleLikeButton(evt){
@@ -94,8 +96,9 @@ function handleDeleteButton(evt){
 function openImage(evt){
   const link = evt.target.src;
   const caption = evt.target.alt;
-  document.querySelector(".picture-popup__image").src = link;
-  document.querySelector(".picture-popup__image").alt = caption;
+  const imageElement = document.querySelector(".picture-popup__image");
+  imageElement.src = link;
+  imageElement.alt = caption;
   document.querySelector(".picture-popup__caption").textContent = caption;
   document.querySelector(".picture-popup__close-button").addEventListener("click", handleCloseButton);
   openPopup(picturePopup);

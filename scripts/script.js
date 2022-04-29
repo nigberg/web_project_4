@@ -72,10 +72,10 @@ function handleCloseButton(evt){
 }
 function handleEditButton(){
   openPopup(editPopup);
-  let userName = document.querySelector(".profile__name").textContent;
-  let userAbout = document.querySelector(".profile__occupation").textContent;
-  let inputName = document.querySelector("#edit-popup__input-name");
-  let inputAbout = document.querySelector("#edit-popup__input-about");
+  const userName = document.querySelector(".profile__name").textContent;
+  const userAbout = document.querySelector(".profile__occupation").textContent;
+  const inputName = document.querySelector("#edit-popup__input-name");
+  const inputAbout = document.querySelector("#edit-popup__input-about");
   inputName.value = userName;
   inputAbout.value = userAbout;
 }

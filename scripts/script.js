@@ -64,9 +64,12 @@ function renderCard(card){
 }
 
 function openPopup(popup) {
+  const inputList = Array.from(popup.querySelectorAll(".form__input"));
+  const buttonElement = popup.querySelector(".form__submit-button");
   popup.classList.add("popup_visible");
   document.addEventListener("keydown", handleKeyDown);
   popup.addEventListener("mousedown", handleMouseDown);
+  toggleButtonState(inputList, buttonElement);
 }
 
 function closePopup(popup) {

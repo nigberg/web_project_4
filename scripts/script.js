@@ -65,15 +65,34 @@ function renderCard(card){
 
 function openPopup(popup) {
   popup.classList.add("popup_visible");
+  document.addEventListener("keydown", handleKeyDown);
+  popup.addEventListener("mousedown", handleMouseDown);
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_visible");
+  document.removeEventListener("keydown", handleKeyDown);
+  popup.removeEventListener("mousedown", handleMouseDown);
 }
 
 function handleCloseButton(evt){
   closePopup(evt.target.closest(".popup"));
 }
+
+function handleKeyDown(evt){
+  const popupOpen = document.querySelector(".popup_visible");
+  if(evt.key === "Escape"){
+    closePopup(popupOpen);
+  }
+}
+
+function handleMouseDown(evt){
+  const popupOpen = document.querySelector(".popup_visible");
+  if(evt.target === popupOpen){
+    closePopup(popupOpen);
+  }
+}
+
 function handleEditButton(){
   openPopup(editPopup);
   const userName = profileNameElement.textContent;

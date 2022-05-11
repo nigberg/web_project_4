@@ -49,12 +49,18 @@
       <div class="edit-popup__container">
         <button type="button" class="edit-popup__close-button"></button>
         <h2 class="edit-popup__caption">Edit profile</h2>
-        <form action="#" name="edit-form" class="edit-popup__edit-form">
-          <input type="text" required class="edit-popup__input" id="edit-popup__input-name" name="name"
-            placeholder="Enter your name" />
-          <input type="text" required class="edit-popup__input" id="edit-popup__input-about" name="about"
-            placeholder="About you" />
-          <button type="submit" class="edit-popup__submit-button">Save</button>
+        <form action="#" name="edit-form" class="form edit-popup__form" novalidate>
+          <div class="form__field">
+            <input type="text" minlength="2" maxlength="40" required class="form__input" id="edit-popup__input-name"
+              name="name" placeholder="Enter your name" />
+            <span class="form__input-error edit-popup__input-name-error"></span>
+          </div>
+          <div class="form__field">
+            <input type="text" minlength="2" maxlength="200" required class="form__input" id="edit-popup__input-about"
+              name="about" placeholder="About you" />
+            <span class="form__input-error edit-popup__input-about-error"></span>
+          </div>
+          <button type="submit" class="form__submit-button">Save</button>
         </form>
       </div>
     </div>
@@ -69,17 +75,24 @@
       <div class="add-popup__container">
         <button type="button" class="add-popup__close-button"></button>
         <h2 class="add-popup__caption">New place</h2>
-        <form action="#" name="add-form" class="add-popup__form">
-          <input type="text" required class="add-popup__input" id="add-popup__input-description" name="description"
-            placeholder="Enter place name" />
-          <input type="text" required class="add-popup__input" id="add-popup__input-link" name="link"
-            placeholder="Enter picture link" />
-          <button type="submit" class="add-popup__submit-button">Save</button>
+        <form action="#" name="add-form" class="form add-popup__form" novalidate>
+          <div class="form__field">
+            <input type="text" minlength="1" maxlength="30" required class="form__input"
+              id="add-popup__input-description" name="description" placeholder="Enter place name" />
+            <span class="form__input-error add-popup__input-description-error"></span>
+          </div>
+          <div class="form__field">
+            <input type="url" required class="form__input" id="add-popup__input-link" name="link"
+              placeholder="Enter picture link" />
+            <span class="form__input-error add-popup__input-link-error"></span>
+          </div>
+          <button type="submit" class="form__submit-button">Save</button>
         </form>
       </div>
     </div>
   </div>
   <script src="./scripts/script.js"></script>
+  <script src="./scripts/validation.js"></script>
 </body>
 
 </html>

@@ -130,12 +130,12 @@ function handleAddform(evt){
   evt.preventDefault();
   const link = document.querySelector("#add-popup__input-link").value;
   const name = document.querySelector("#add-popup__input-description").value;
-  const inputLIst = Array.from(evt.target.querySelectorAll(configurationObject.inputSelector));
+  const inputList = Array.from(evt.target.querySelectorAll(configurationObject.inputSelector));
   const buttonElement = evt.target.querySelector(configurationObject.submitButtonSelector);
   renderCard({link, name});
   closePopup(addPopup);
   evt.target.reset();
-  toggleButtonState(inputLIst, buttonElement, configurationObject);
+  toggleButtonState(inputList, buttonElement, configurationObject);
 }
 // Event listeners binding with elements
 editPopupCloseButton.addEventListener("click", handleCloseButton);

@@ -1,11 +1,22 @@
-enableValidation();
+// Configuration data
+const configurationObject = {
+  formSelector: ".form",
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__submit-button",
+  inactiveButtonClass: "form__submit-button_inactive",
+  inputErrorClass: "form__input_type_error",
+  errorClass: "form__input-error_active"
+};
 
-function isValid(formElement, inputElement){
+// Main validation function call
+enableValidation(configurationObject);
+
+function isValid(formElement, inputElement, configurationObject){
   if(!inputElement.validity.valid){
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(formElement, inputElement, inputElement.validationMessage, configurationObject);
   }
   else{
-    hideInputError(formElement, inputElement);
+    hideInputError(formElement, inputElement, configurationObject);
   }
 }
 function hasInvalidInput(inputList){
@@ -13,45 +24,48 @@ function hasInvalidInput(inputList){
     return !inputElement.validity.valid;
   });
 }
-function toggleButtonState(inputList, buttonElement){
+function toggleButtonState(inputList, buttonElement, configurationObject){
   if(hasInvalidInput(inputList)){
-    buttonElement.classList.add("form__submit-button_inactive");
+    buttonElement.classList.add(configurationObject.inactiveButtonClass);
     buttonElement.disabled = true;
   }
   else{
-    buttonElement.classList.remove("form__submit-button_inactive");
+    buttonElement.classList.remove(configurationObject.inactiveButtonClass);
     buttonElement.disabled = false;
   }
 }
-function showInputError(formElement, inputElement, errorMessage){
+function showInputError(formElement, inputElement, errorMessage, configurationObject){
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add("form__input_type_error");
+  inputElement.classList.add(configurationObject.inputErrorClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add("form__input-error_active");
+  errorElement.classList.add(configurationObject.errorClass);
 }
-function hideInputError(formElement, inputElement){
+function hideInputError(formElement, inputElement, configurationObject){
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove("form__input_type_error");
+  inputElement.classList.remove(configurationObject.inputErrorClass);
   errorElement.textContent = "";
-  errorElement.classList.remove("form__input-error_active");
+  errorElement.classList.remove(configurationObject.errorClass);
 }
-function setEventListeners(formElement){
-  const inputList = Array.from(formElement.querySelectorAll(".form__input"));
-  const buttonElement = formElement.querySelector(".form__submit-button");
-  toggleButtonState(inputList, buttonElement);
+function setEventListeners(formElement, configurationObject){
+  const inputList = Array.from(formElement.querySelectorAll(configurationObject.inputSelector));
+  const buttonElement = formElement.querySelector(configurationObject.submitButtonSelector);
+  console.log(inputList);
+  console.log(buttonElement);
+  console.log(configurationObject.inputSelector);
+  toggleButtonState(inputList, buttonElement, configurationObject);
   inputList.forEach((inputElement)=>{
     inputElement.addEventListener("input", function(){
-      isValid(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
+      isValid(formElement, inputElement, configurationObject);
+      toggleButtonState(inputList, buttonElement, configurationObject);
     });
   });
 }
-function enableValidation(){
-  const formtList = Array.from(document.querySelectorAll(".form"));
+function enableValidation(configurationObject){
+  const formtList = Array.from(document.querySelectorAll(configurationObject.formSelector));
   formtList.forEach((formElement)=>{
     formElement.addEventListener("submit", function(evt){
       evt.preventDefault();
     });
-    setEventListeners(formElement);
+    setEventListeners(formElement, configurationObject);
   });
 }

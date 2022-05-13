@@ -1,5 +1,7 @@
 // Elements selecting
 const editPopupCloseButton = document.querySelector(".edit-popup__close-button");
+const addPopupCloseButton = document.querySelector(".add-popup__close-button");
+const picturePopupCloseButton = document.querySelector(".picture-popup__close-button");
 const editButton = document.querySelector(".profile__edit-button");
 const addButton = document.querySelector(".profile__add-button");
 const editForm = document.querySelector(".edit-popup__form");
@@ -64,12 +66,9 @@ function renderCard(card){
 }
 
 function openPopup(popup) {
-  const inputList = Array.from(popup.querySelectorAll(".form__input"));
-  const buttonElement = popup.querySelector(".form__submit-button");
   popup.classList.add("popup_visible");
   document.addEventListener("keydown", handleKeyDown);
   popup.addEventListener("mousedown", handleMouseDown);
-  toggleButtonState(inputList, buttonElement);
 }
 
 function closePopup(popup) {
@@ -83,8 +82,8 @@ function handleCloseButton(evt){
 }
 
 function handleKeyDown(evt){
-  const popupOpen = document.querySelector(".popup_visible");
   if(evt.key === "Escape"){
+    const popupOpen = document.querySelector(".popup_visible");
     closePopup(popupOpen);
   }
 }
@@ -122,12 +121,10 @@ function openImage(evt){
   imageElement.src = link;
   imageElement.alt = caption;
   document.querySelector(".picture-popup__caption").textContent = caption;
-  document.querySelector(".picture-popup__close-button").addEventListener("click", handleCloseButton);
   openPopup(picturePopup);
 }
 function handleAddButton(){
   openPopup(addPopup);
-  document.querySelector(".add-popup__close-button").addEventListener("click", handleCloseButton);
 }
 function handleAddform(evt){
   evt.preventDefault();
@@ -136,9 +133,12 @@ function handleAddform(evt){
   renderCard({link, name});
   closePopup(addPopup);
   evt.target.reset();
+  enableValidation(configurationObject);
 }
 // Event listeners binding with elements
 editPopupCloseButton.addEventListener("click", handleCloseButton);
+addPopupCloseButton.addEventListener("click", handleCloseButton);
+picturePopupCloseButton.addEventListener("click", handleCloseButton);
 editButton.addEventListener("click", handleEditButton);
 editForm.addEventListener("submit", handleSubmitForm);
 addForm.addEventListener("submit", handleAddform);

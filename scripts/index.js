@@ -1,5 +1,7 @@
 import Card from "./Card.js";
-import {openPopup, closePopup, handleCloseButton, handleKeyDown, handleMouseDown} from "./utils.js";
+import FormValidator from "./FormValidator.js";
+import {openPopup, closePopup, handleCloseButton} from "./utils.js";
+import {initialCards, configurationObject} from "./constants.js";
 
 const cardTemplateSelector = "#card";
 const editPopupCloseButton = document.querySelector(".edit-popup__close-button");
@@ -16,32 +18,6 @@ const profileNameElement = document.querySelector(".profile__name");
 const profileOccupationElement = document.querySelector(".profile__occupation");
 const profileNameInputElement = document.querySelector("#edit-popup__input-name");
 const profileOccupationInputElement = document.querySelector("#edit-popup__input-about");
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
-  },
-  {
-    name: "Lake Louise",
-    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
-  },
-  {
-    name: "Latemar",
-    link: "https://code.s3.yandex.net/web-code/latemar.jpg"
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://code.s3.yandex.net/web-code/vanoise.jpg"
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://code.s3.yandex.net/web-code/lago.jpg"
-  }
-];
 
 initialCards.forEach((item)=>{
   renderCard(item);
@@ -59,6 +35,8 @@ function handleEditButton(){
   const userAbout = profileOccupationElement.textContent;
   profileNameInputElement.value = userName;
   profileOccupationInputElement.value = userAbout;
+  const validator = new FormValidator(configurationObject, editForm);
+  validator.enableValidation();
 }
 function handleSubmitForm(evt){
   evt.preventDefault();
@@ -69,6 +47,8 @@ function handleSubmitForm(evt){
 
 function handleAddButton(){
   openPopup(addPopup);
+  const validator = new FormValidator(configurationObject, addForm);
+  validator.enableValidation();
 }
 function handleAddform(evt){
   evt.preventDefault();

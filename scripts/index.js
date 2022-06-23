@@ -18,6 +18,10 @@ const profileNameElement = document.querySelector(".profile__name");
 const profileOccupationElement = document.querySelector(".profile__occupation");
 const profileNameInputElement = document.querySelector("#edit-popup__input-name");
 const profileOccupationInputElement = document.querySelector("#edit-popup__input-about");
+const profileFormValidator = new FormValidator(configurationObject, editForm);
+profileFormValidator.enableValidation();
+const addFormValidator = new FormValidator(configurationObject, addForm);
+addFormValidator.enableValidation();
 
 initialCards.forEach((item)=>{
   renderCard(item);
@@ -35,8 +39,7 @@ function handleEditButton(){
   const userAbout = profileOccupationElement.textContent;
   profileNameInputElement.value = userName;
   profileOccupationInputElement.value = userAbout;
-  const validator = new FormValidator(configurationObject, editForm);
-  validator.enableValidation();
+  profileFormValidator.toggleButtonState();
 }
 function handleSubmitForm(evt){
   evt.preventDefault();
@@ -47,10 +50,9 @@ function handleSubmitForm(evt){
 
 function handleAddButton(){
   openPopup(addPopup);
-  const validator = new FormValidator(configurationObject, addForm);
-  validator.enableValidation();
+  addFormValidator.toggleButtonState();
 }
-function handleAddform(evt){
+function handleAddForm(evt){
   evt.preventDefault();
   const link = document.querySelector("#add-popup__input-link").value;
   const name = document.querySelector("#add-popup__input-description").value;
@@ -64,5 +66,5 @@ addPopupCloseButton.addEventListener("click", handleCloseButton);
 picturePopupCloseButton.addEventListener("click", handleCloseButton);
 editButton.addEventListener("click", handleEditButton);
 editForm.addEventListener("submit", handleSubmitForm);
-addForm.addEventListener("submit", handleAddform);
+addForm.addEventListener("submit", handleAddForm);
 addButton.addEventListener("click", handleAddButton);

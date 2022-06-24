@@ -2,6 +2,8 @@ export default class FormValidator{
   constructor(setting, formElement){
     this._settings = setting;
     this._formElement = formElement;
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._settings.inputSelector));
+    this._buttonElement = this._formElement.querySelector(this._settings.submitButtonSelector);
   }
   _showInputError=(inputElement, errorMessage)=>{
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
@@ -23,29 +25,27 @@ export default class FormValidator{
       this._hideInputError(inputElement);
     }
   }
-  _hasInvalidInput=(inputList)=>{
-    return inputList.some((inputElement)=>{
+  _hasInvalidInput=()=>{
+    return this._inputList.some((inputElement)=>{
       return !inputElement.validity.valid;
     });
   }
-  toggleButtonState=(inputList, buttonElement)=>{
-    if(this._hasInvalidInput(inputList)){
-      buttonElement.classList.add(this._settings.inactiveButtonClass);
-      buttonElement.disabled = true;
+  toggleButtonState=()=>{
+    if(this._hasInvalidInput()){
+      this._buttonElement.classList.add(this._settings.inactiveButtonClass);
+      this._buttonElement.disabled = true;
     }
     else{
-      buttonElement.classList.remove(this._settings.inactiveButtonClass);
-      buttonElement.disabled = false;
+      this._buttonElement.classList.remove(this._settings.inactiveButtonClass);
+      this._buttonElement.disabled = false;
     }
   }
   _setEventListeners=()=>{
-    const inputList = Array.from(this._formElement.querySelectorAll(this._settings.inputSelector));
-    const buttonElement = this._formElement.querySelector(this._settings.submitButtonSelector);
-    this.toggleButtonState(inputList, buttonElement);
-    inputList.forEach((element)=>{
+    this.toggleButtonState();
+    this._inputList.forEach((element)=>{
     element.addEventListener("input", ()=>{
       this._toggleInputError(element);
-      this.toggleButtonState(inputList, buttonElement);
+      this.toggleButtonState();
     });
   });
   }

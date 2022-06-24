@@ -50,7 +50,6 @@ function handleSubmitForm(evt){
 
 function handleAddButton(){
   openPopup(addPopup);
-  addFormValidator.toggleButtonState();
 }
 function handleAddForm(evt){
   evt.preventDefault();
@@ -59,6 +58,7 @@ function handleAddForm(evt){
   renderCard({link, name});
   closePopup(addPopup);
   evt.target.reset();
+  addFormValidator.toggleButtonState();
 }
 // Event listeners binding with elements
 editPopupCloseButton.addEventListener("click", handleCloseButton);

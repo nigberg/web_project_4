@@ -10,7 +10,7 @@
   <meta name="description"
     content="Around The U.S. — an interactive page where users can add, remove, or like photos" />
   <title>Around The U.S.</title>
-  <link rel="stylesheet" href="./pages/index.css" />
+  <!-- <link rel="stylesheet" href="./pages/index.css" /> -->
   <link rel="icon" href="./favicon.ico">
 </head>
 
@@ -46,8 +46,8 @@
       <p class="footer__copyright">&copy; 2022 Meir Nigberg</p>
     </footer>
     <div class="popup edit-popup">
-      <div class="edit-popup__container">
-        <button type="button" class="edit-popup__close-button"></button>
+      <div class="edit-popup__container popup__content">
+        <button type="button" class="edit-popup__close-button popup__close-button"></button>
         <h2 class="edit-popup__caption">Edit profile</h2>
         <form action="#" name="edit-form" class="form edit-popup__form" novalidate>
           <div class="form__field">
@@ -65,15 +65,15 @@
       </div>
     </div>
     <div class="popup picture-popup">
-      <div class="picture-popup__image-container">
-        <button type="button" class="picture-popup__close-button"></button>
+      <div class="picture-popup__image-container popup__content">
+        <button type="button" class="picture-popup__close-button popup__close-button"></button>
         <img src="https://code.s3.yandex.net/web-code/lago.jpg" alt="Lago di Braies" class="picture-popup__image">
         <h2 class="picture-popup__caption">Lago di Braies</h2>
       </div>
     </div>
     <div class="popup add-popup">
-      <div class="add-popup__container">
-        <button type="button" class="add-popup__close-button"></button>
+      <div class="add-popup__container popup__content">
+        <button type="button" class="add-popup__close-button popup__close-button"></button>
         <h2 class="add-popup__caption">New place</h2>
         <form action="#" name="add-form" class="form add-popup__form" novalidate>
           <div class="form__field">
@@ -91,10 +91,10 @@
       </div>
     </div>
   </div>
-  <script type="module" src="./scripts/Card.js"></script>
-  <script type="module" src="./scripts/FormValidator.js"></script>
+  <!-- <script type="module" src="./scripts/components/Card.js"></script>
+  <script type="module" src="./scripts/components/FormValidator.js"></script>
   <script type="module" src="./scripts/utils.js"></script>
-  <script type="module" src="./scripts/index.js"></script>
+  <script type="module" src="./scripts/index.js"></script> -->
 </body>
 
 </html>

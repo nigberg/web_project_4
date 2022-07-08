@@ -32,3 +32,4 @@ export const configurationObject = {
   inputErrorClass: "form__input_type_error",
   errorClass: "form__input-error_active"
 };
+export const closeButtonSelector = ".popup__close-button";

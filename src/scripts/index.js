@@ -11,9 +11,6 @@ import logoSrc from "../images/logo.svg";
 const logo = document.querySelector(".header__logo");
 logo.src = logoSrc;
 
-// import faviconHref from "../favicon.ico";
-// const fav = document.querySelector("#favicon");
-// fav.href = faviconHref;
 
 const cardTemplateSelector = "#card";
 const editButton = document.querySelector(".profile__edit-button");

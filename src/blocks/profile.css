@@ -14,13 +14,35 @@
   "avatar name edit"
   "avatar occupation .";
 }
+
 .profile__avatar{
+  position: relative;
   width: 120px;
   height: 120px;
   border-radius: 50%;
   background-image: url(../images/avatar.jpg);
   background-size: cover;
+
   grid-area: avatar;
+  cursor: pointer;
+  transition: linear all .3s;
+}
+
+.profile__avatar-edit-image{
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  height: 26px;
+  width: 26px;
+  z-index: 1;
+  opacity: 0;
+  transition: linear all .3s;
+}
+.profile__avatar:hover{
+  opacity: 50%;
+}
+.profile__avatar:hover .profile__avatar-edit-image{
+  opacity: 1;
 }
 .profile__name{
   margin: 0;

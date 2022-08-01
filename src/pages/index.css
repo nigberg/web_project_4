@@ -10,5 +10,7 @@
 @import url(../blocks/edit-popup.css);
 @import url(../blocks/picture-popup.css);
 @import url(../blocks/add-popup.css);
+@import url(../blocks/confirm-popup.css);
+@import url(../blocks/avatar-change-popup.css);
 @import url(../blocks/popup.css);
 @import url(../blocks/form.css);

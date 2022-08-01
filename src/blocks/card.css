@@ -46,6 +46,13 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.card__likes{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+}
 .card__like-button{
   width: 21px;
   height: 19px;
@@ -65,4 +72,9 @@
 }
 .card__like-button_active:hover{
   opacity: 50%;
+}
+.card__likes-count{
+  color: #000;
+  font-weight: 400;
+  font-size: 12px;
 }

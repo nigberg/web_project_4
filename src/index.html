@@ -21,7 +21,9 @@
     <main class="content">
       <section class="profile">
         <div class="profile__user-info">
-          <div class="profile__avatar"></div>
+          <button type="button" class="profile__avatar">
+            <img alt="edit" class="profile__avatar-edit-image" src="./images/edit.svg"/>
+          </button>
           <h1 class="profile__name">Jacques Cousteau</h1>
           <button type="button" class="profile__edit-button"></button>
           <p class="profile__occupation">Explorer</p>
@@ -34,7 +36,10 @@
             <img src="#" alt="" class="card__image">
             <div class="card__caption">
               <h2 class="card__description"></h2>
-              <button type="button" class="card__like-button"></button>
+              <div class="card__likes">
+                <button type="button" class="card__like-button"></button>
+                <span class="card__likes-count"></span>
+              </div>
               <button type="button" class="card__delete-button"></button>
             </div>
           </article>
@@ -84,6 +89,29 @@
             <input type="url" required class="form__input" id="add-popup__input-link" name="link"
               placeholder="Enter picture link" />
             <span class="form__input-error add-popup__input-link-error"></span>
+          </div>
+          <button type="submit" class="form__submit-button">Save</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup confirm-popup">
+      <div class="confirm-popup__container">
+        <button type="button" class="confirm-popup__close-button popup__close-button"></button>
+        <h2 class="confirm-popup__question">Are you sure?</h2>
+        <form action="#" name="form" class="form">
+          <button type="submit" class="confirm-popup__confirm-button">Yes</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup avatar-change-popup">
+      <div class="avatar-change-popup__container popup__content">
+        <button type="button" class="avatar-change-popup__close-button popup__close-button"></button>
+        <h2 class="avatar-change-popup__caption">Change profile picture</h2>
+        <form action="#" name="avatar-change-form" class="form avatar-change-popup__form" novalidate>
+          <div class="form__field">
+            <input type="url" required class="form__input" id="avatar-change-popup__input-link" name="link"
+              placeholder="Enter new avatar link" />
+            <span class="form__input-error avatar-change-popup__input-link-error"></span>
           </div>
           <button type="submit" class="form__submit-button">Save</button>
         </form>

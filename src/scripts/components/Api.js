@@ -4,22 +4,26 @@ class Api {
     this._headers = options.headers;
   }
 
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error ${res.status}`);
+  }
+
+
   getUserInfo() {
     return fetch(this._baseUrl+'/users/me', {
       headers: this._headers
     })
-    .then((res) =>
-      res.ok ? res.json() : Promise.reject(res.statusText)
-    );
+    .then(this._checkResponse);
   }
 
   getInitialCards() {
     return fetch(this._baseUrl+'/cards', {
       headers: this._headers
     })
-    .then((res) =>
-      res.ok ? res.json() : Promise.reject(res.statusText)
-    );
+    .then(this._checkResponse);
   }
 
   editProfile({name, about}){
@@ -28,9 +32,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({name, about})
     })
-    .then((res) =>
-      res.ok ? res.json() : Promise.reject(res.statusText)
-    );
+    .then(this._checkResponse);
   }
 
   addNewCard(name, link){
@@ -39,9 +41,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({name, link})
     })
-    .then((res) =>
-      res.ok ? res.json() : Promise.reject(res.statusText)
-    );
+    .then(this._checkResponse);
   }
 
   addLike(cardId){
@@ -49,9 +49,7 @@ class Api {
       method: "PUT",
       headers: this._headers
     })
-    .then(res =>
-      res.ok ? res.json() : Promise.reject(res.statusText)
-    );
+    .then(this._checkResponse);
   }
 
   removeLike(cardId){
@@ -59,9 +57,7 @@ class Api {
       method: "DELETE",
       headers: this._headers
     })
-    .then(res =>
-      res.ok ? res.json() : Promise.reject(res.statusText)
-    );
+    .then(this._checkResponse);
   }
 
   deleteCard(cardId){
@@ -69,9 +65,7 @@ class Api {
       method: "DELETE",
       headers: this._headers
     })
-    .then(res =>
-      res.ok ? res.json() : Promise.reject(res.statusText)
-    );
+    .then(this._checkResponse);
   }
 
   setAvatar(avatar){
@@ -80,9 +74,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({avatar})
     })
-    .then((res) =>
-      res.ok ? res.json() : Promise.reject(res.statusText)
-    );
+    .then(this._checkResponse);
   }
 }
 

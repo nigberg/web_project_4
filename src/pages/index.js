@@ -41,6 +41,7 @@ const editProfilePopup = new PopupWithForm(".edit-popup", handleProfileEditForm)
 const addCardPopup = new PopupWithForm(".add-popup", handleCardAddForm);
 const avatarChangePopup = new PopupWithForm(".avatar-change-popup", handleAvatarChangeForm);
 const confirmPopup = new ConfirmPopup(".confirm-popup");
+const imagePopup = new PopupWithImage(".picture-popup");
 
 const userInfo = new UserInfo({
   nameSelector: profileNameSelector,
@@ -55,7 +56,7 @@ let userId = "";
   api
     .getUserInfo()
     .then((res) => {
-      userInfo.setUserInfo(res.name, res.about, res.avatar);
+      userInfo.setUserInfo({name: res.name, about: res.about, avatar: res.avatar});
       userId = res._id;
       return userInfo.getUserInfo();
     })
@@ -68,7 +69,7 @@ function editUserInfo(data) {
   api
     .editProfile(data)
     .then((res) => {
-      userInfo.setUserInfo(res.name, res.about);
+      userInfo.setUserInfo({name: res.name, about: res.about});
     })
     .catch(console.log)
     .finally(() => {editProfilePopup.renderWaiting(false);}
@@ -88,8 +89,7 @@ const createNewCard = (data) => {
     userId,
     cardTemplateSelector,
     (evt) => {
-      const popup = new PopupWithImage(".picture-popup", data);
-      popup.open();
+      imagePopup.open(data);
     },
     function () {
       //like button handler
@@ -177,8 +177,7 @@ function handleAvatarChangeForm(evt){
   avatarChangePopup.renderWaiting(true);
   api.setAvatar(link)
   .then(res => {
-    userInfo.setAvatar(res.avatar);
-    console.log(res.avatar);
+    userInfo.setUserInfo({avatar: res.avatar});
   })
   .catch(console.log)
   .finally(() => {avatarChangePopup.renderWaiting(false);});

@@ -12,7 +12,7 @@ export default class Popup {
     this.close();
   };
   _handleMouseDown = (evt) => {
-    if (evt.target === document.querySelector(".popup_visible")) {
+    if (evt.target === this._popup) {
       this.close();
     }
   };

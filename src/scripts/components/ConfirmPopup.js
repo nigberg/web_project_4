@@ -16,7 +16,6 @@ export default class ConfirmPopup extends Popup{
   _handleSubmit = (evt) => {
     evt.preventDefault();
     this._cardDeleteFunction(this._cardToDelete);
-    this.close();
   }
   open(){
     super.open();

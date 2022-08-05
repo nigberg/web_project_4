@@ -5,43 +5,49 @@ import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import ConfirmPopup from "../scripts/components/ConfirmPopup.js";
 import UserInfo from "../scripts/components/UserInfo.js";
-import { configurationObject } from "../scripts/utils/constants.js";
+import {
+  configurationObject,
+  cardTemplateSelector,
+  editButton,
+  addButton,
+  avatarChangeButton,
+  profileNameSelector,
+  profileOccupationSelector,
+  profileAvatarSelector,
+  profileNameInputElement,
+  profileOccupationInputElement,
+  logoElement,
+  avatarEditImageElement
+} from "../scripts/utils/constants.js";
 import { api } from "../scripts/components/Api.js";
 import "./index.css";
 
 import logoSrc from "../images/logo.svg";
-const logo = document.querySelector(".header__logo");
-logo.src = logoSrc;
+logoElement.src = logoSrc;
 import editSrc from "../images/edit.svg";
-const edit = document.querySelector(".profile__avatar-edit-image");
-edit.src = editSrc;
+avatarEditImageElement.src = editSrc;
 
-const cardTemplateSelector = "#card";
-const editButton = document.querySelector(".profile__edit-button");
-const addButton = document.querySelector(".profile__add-button");
-const avatarChangeButton = document.querySelector(".profile__avatar");
-const editForm = document.querySelector(".edit-popup__form");
-const addForm = document.querySelector(".add-popup__form");
-const avatarChangeForm = document.querySelector(".avatar-change-popup__form");
-const profileNameSelector = ".profile__name";
-const profileNameElement = document.querySelector(profileNameSelector);
-const profileOccupationSelector = ".profile__occupation";
-const profileAvatarSelector = ".profile__avatar";
-const profileOccupationElement = document.querySelector(
-  profileOccupationSelector
-);
-const profileNameInputElement = document.querySelector(
-  "#edit-popup__input-name"
-);
-const profileOccupationInputElement = document.querySelector(
-  "#edit-popup__input-about"
-);
-
+//popup instances creation
 const editProfilePopup = new PopupWithForm(".edit-popup", handleProfileEditForm);
 const addCardPopup = new PopupWithForm(".add-popup", handleCardAddForm);
 const avatarChangePopup = new PopupWithForm(".avatar-change-popup", handleAvatarChangeForm);
 const confirmPopup = new ConfirmPopup(".confirm-popup");
 const imagePopup = new PopupWithImage(".picture-popup");
+
+//forms validation
+const formValidators = {};
+
+const enableValidation = (configurationObject) => {
+  const formList = Array.from(document.forms);
+  formList.forEach(formElement => {
+    const validator = new FormValidator(configurationObject, formElement);
+    const formName = formElement.getAttribute('name');
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+enableValidation(configurationObject);
+
 
 const userInfo = new UserInfo({
   nameSelector: profileNameSelector,
@@ -49,19 +55,8 @@ const userInfo = new UserInfo({
   avatarSelector: profileAvatarSelector
 });
 
+//user id will be set after initial server request
 let userId = "";
-
-//User info fetching from server and updating on page
-(function updateUserInfo() {
-  api
-    .getUserInfo()
-    .then((res) => {
-      userInfo.setUserInfo({name: res.name, about: res.about, avatar: res.avatar});
-      userId = res._id;
-      return userInfo.getUserInfo();
-    })
-    .then(console.log);
-})();
 
 //Editing user info on server and immediatelly updating it on page
 function editUserInfo(data) {
@@ -70,18 +65,12 @@ function editUserInfo(data) {
     .editProfile(data)
     .then((res) => {
       userInfo.setUserInfo({name: res.name, about: res.about});
+      editProfilePopup.close();
     })
     .catch(console.log)
     .finally(() => {editProfilePopup.renderWaiting(false);}
     );
 }
-
-const profileFormValidator = new FormValidator(configurationObject, editForm);
-profileFormValidator.enableValidation();
-const addFormValidator = new FormValidator(configurationObject, addForm);
-addFormValidator.enableValidation();
-const avatarChangeFormValidator = new FormValidator(configurationObject, avatarChangeForm);
-avatarChangeFormValidator.enableValidation();
 
 const createNewCard = (data) => {
   const cardElement = new Card(
@@ -93,14 +82,16 @@ const createNewCard = (data) => {
     },
     function () {
       //like button handler
-      if (!this.isLikedByOwner()) {
-        api.addLike(this.getId()).then((res) => {
-          this.setLikes(res.likes);
-        });
+      if (!cardElement.isLikedByOwner()) {
+        api.addLike(cardElement.getId()).then((res) => {
+          cardElement.setLikes(res.likes);
+        })
+        .catch(console.log);
       } else {
-        api.removeLike(this.getId()).then((res) => {
-          this.setLikes(res.likes);
-        });
+        api.removeLike(cardElement.getId()).then((res) => {
+          cardElement.setLikes(res.likes);
+        })
+        .catch(console.log);
       }
     },
     function () {
@@ -111,11 +102,12 @@ const createNewCard = (data) => {
           .deleteCard(card.getId())
           .then((res) => {
             card.removeCardFromDom();
+            confirmPopup.close();
           })
           .catch(console.log);
         }
       );
-      confirmPopup.setCardToDelete(this);
+      confirmPopup.setCardToDelete(cardElement);
     }
   );
   return cardElement.getCard();
@@ -126,63 +118,62 @@ const cardsList = new Section((item) => {
   cardsList.addItem(card);
 }, ".gallery");
 
-//Initial card fetching and rendering on page
-api.getInitialCards().then((res) => {
-  cardsList.renderItems(res);
-});
+//Initial card and user info combined fetching
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+.then(([userData, initialCards]) => {
+  userInfo.setUserInfo({name: userData.name, about: userData.about, avatar: userData.avatar});
+  userId = userData._id;
+  cardsList.renderItems(initialCards);
+})
+.catch(console.log);
 
 function handleProfileEditButton() {
   editProfilePopup.open();
-  const { name: userName, occupation: userAbout } = userInfo.getUserInfo();
-  profileNameInputElement.value = userName;
-  profileOccupationInputElement.value = userAbout;
-  profileFormValidator.toggleButtonState();
+  const { name, occupation } = userInfo.getUserInfo();
+  profileNameInputElement.value = name;
+  profileOccupationInputElement.value = occupation;
+  formValidators["edit-form"].toggleButtonState();
 }
 
 function handleProfileEditForm(evt) {
   evt.preventDefault();
-  const newUserData = {
-    name: profileNameInputElement.value,
-    about: profileOccupationInputElement.value,
-  };
+  const newUserData = editProfilePopup.getInputValues();
   editUserInfo(newUserData);
-  editProfilePopup.close();
 }
 
 function handleCardAddButton() {
+  formValidators["add-form"].toggleButtonState();
   addCardPopup.open();
 }
 function handleCardAddForm(evt) {
-  const link = document.querySelector("#add-popup__input-link").value;
-  const name = document.querySelector("#add-popup__input-description").value;
+  const {name, link} = addCardPopup.getInputValues();
   addCardPopup.renderWaiting(true);
   api
-    .addNewCard(name, link)
+    .addNewCard({name, link})
     .then((res) => {
       cardsList.addItem(createNewCard(res));
+      addCardPopup.close();
     })
     .catch(console.log)
     .finally(() => {addCardPopup.renderWaiting(false);});
-  addCardPopup.close();
-  addFormValidator.toggleButtonState();
 }
 
 function handleAvatarChangeButton(){
+  formValidators["avatar-change-form"].toggleButtonState();
   avatarChangePopup.open();
 }
 
 function handleAvatarChangeForm(evt){
   evt.preventDefault();
-  const link = document.querySelector("#avatar-change-popup__input-link").value;
+  const link = avatarChangePopup.getInputValues().link;
   avatarChangePopup.renderWaiting(true);
   api.setAvatar(link)
   .then(res => {
     userInfo.setUserInfo({avatar: res.avatar});
+    avatarChangePopup.close();
   })
   .catch(console.log)
   .finally(() => {avatarChangePopup.renderWaiting(false);});
-  avatarChangePopup.close();
-  addFormValidator.toggleButtonState();
 }
 
 editButton.addEventListener("click", handleProfileEditButton);

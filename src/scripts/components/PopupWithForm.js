@@ -10,7 +10,7 @@ export default class PopupWithForm extends Popup {
     this._submitButtonWaitingText = "Saving...";
   }
 
-  _getInputValues = () => {
+  getInputValues = () => {
     this._inputList = Array.from(this._formInputs);
     const result = {};
     this._inputList.forEach((item) => {

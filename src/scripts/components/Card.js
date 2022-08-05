@@ -5,8 +5,8 @@ export default class Card {
     this._likes = data.likes;
     this._cardTemplateSelector = cardTemplateSelector;
     this._handleCardClick = handleCardClick;
-    this._handleLikeButton = handleLikeButton.bind(this);
-    this._handleDeleteButton = handleDeleteButton.bind(this);
+    this._handleLikeButton = handleLikeButton;
+    this._handleDeleteButton = handleDeleteButton;
     this._id = data._id;
     this._ownerId = data.owner._id;
     this._userId = userId;

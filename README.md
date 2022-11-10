@@ -20,7 +20,7 @@ _Visual Studio Code_
   
 **Images**  
   
-![image info](./images/item1.jpg) 
-![image info](./images/item2.jpg) 
-![image info](./images/item3.jpg) 
-![image info](./images/item4.jpg) 
+![image info](./src/images/item1.jpg) 
+![image info](./src/images/item2.jpg) 
+![image info](./src/images/item3.jpg) 
+![image info](./src/images/item4.jpg) 
